@@ -4,7 +4,7 @@ const userModel = require('../models/userModel')
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const placeOrder = async(req,res)=>{
-    const frontend_url = 'https://userfrontendvit.onrender.com'
+    const frontend_url = 'https://foodprep1.onrender.com/'
 
     try {
         
