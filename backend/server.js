@@ -7,6 +7,17 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 10000;
 
+// Go up one level from backend folder to reach root
+const ROOT_PATH = path.join(__dirname, '..');
+
+// Paths for built files - CORRECTED
+const userDistPath = path.join(ROOT_PATH, 'userfrontend', 'dist');
+const adminDistPath = path.join(ROOT_PATH, 'adminfrontend', 'dist');
+
+console.log('📁 Root path:', ROOT_PATH);
+console.log('📁 User frontend build path:', userDistPath);
+console.log('📁 Admin frontend build path:', adminDistPath);
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -18,14 +29,7 @@ mongoose.connect(MONGODB_URI)
   .then(() => console.log('✅ MongoDB connected'))
   .catch(err => console.error('❌ MongoDB error:', err));
 
-// Paths for built files
-const userDistPath = path.join(__dirname, 'userfrontend', 'dist');
-const adminDistPath = path.join(__dirname, 'adminfrontend', 'dist');
-
-console.log('📁 User frontend build path:', userDistPath);
-console.log('📁 Admin frontend build path:', adminDistPath);
-
-// API Routes (add your backend API endpoints here)
+// API Routes
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'ok', 
@@ -34,7 +38,6 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Serve static files after API routes
 const fs = require('fs');
 
 // Check if builds exist and serve them
@@ -42,14 +45,14 @@ if (fs.existsSync(userDistPath)) {
   app.use(express.static(userDistPath));
   console.log('✅ Serving user frontend from:', userDistPath);
   
-  // User frontend routes
   app.get('/', (req, res) => {
     res.sendFile(path.join(userDistPath, 'index.html'));
   });
 } else {
   console.log('⚠️ User frontend not built yet. Run "npm run build:user"');
+  console.log('   Expected at:', userDistPath);
   app.get('/', (req, res) => {
-    res.send('User frontend is building. Please check back in a minute.');
+    res.send('User frontend is building. Check back in a minute.');
   });
 }
 
@@ -57,15 +60,15 @@ if (fs.existsSync(adminDistPath)) {
   app.use('/admin', express.static(adminDistPath));
   console.log('✅ Serving admin frontend from:', adminDistPath);
   
-  // Admin frontend routes (support React Router)
   app.get('/admin*', (req, res) => {
     res.sendFile(path.join(adminDistPath, 'index.html'));
   });
 } else {
   console.log('⚠️ Admin frontend not built yet. Run "npm run build:admin"');
+  console.log('   Expected at:', adminDistPath);
 }
 
-// Catch-all route - send user frontend for SPA routing
+// Catch-all route
 app.get('*', (req, res) => {
   if (fs.existsSync(path.join(userDistPath, 'index.html'))) {
     res.sendFile(path.join(userDistPath, 'index.html'));
@@ -74,15 +77,6 @@ app.get('*', (req, res) => {
   }
 });
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error('Error:', err);
-  res.status(500).json({ error: 'Internal server error' });
-});
-
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`🌐 User app: https://foodprep1-ulgn.onrender.com`);
-  console.log(`👑 Admin app: https://foodprep1-ulgn.onrender.com/admin`);
-  console.log(`💚 Health check: https://foodprep1-ulgn.onrender.com/api/health`);
 });
