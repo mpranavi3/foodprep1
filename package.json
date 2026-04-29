@@ -1,5 +1,16 @@
 {
+  "name": "foodprep1",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "npm run build:user && npm run build:admin",
+    "build:user": "cd userfrontend && npm install && npm run build",
+    "build:admin": "cd adminfrontend && npm install && npm run build",
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
   "dependencies": {
-    "dotenv": "^17.0.1"
+    "dotenv": "^17.0.1",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.0"
   }
 }
