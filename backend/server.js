@@ -1,35 +1,36 @@
-require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const path = require('path');
+const app = express();
 
-const express = require('express')
-const app = express()
-const connectDB = require('./config/dbConn')
+const PORT = process.env.PORT || 10000;
 
-const port = process.env.PORT || 4000;
+// MongoDB connection
+const MONGODB_URI = 'mongodb+srv://pranavi23bce8014:103komqBu6c72ln0@cluster0.f2x9ysd.mongodb.net/foodprep1';
 
-//middlewares
-app.use(express.json())
-const cors = require('cors')
-app.use(cors())
+mongoose.connect(MONGODB_URI)
+  .then(() => console.log('✅ DB connected'))
+  .catch(err => console.error('DB connection error:', err));
 
-app.use("/image",express.static('uploads'))
+// Middleware
+app.use(express.json());
+app.use(express.static('userfrontend')); // Serve user frontend as main
 
-connectDB()
+// Routes for different frontends
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'adminfrontend', 'index.html'));
+});
 
-//routes
-//api endpoints
-app.use('/api/food',require('./routes/foodRouter'))
-app.use('/api/user',require('./routes/userRouter'))
-app.use('/api/cart',require('./routes/cartRouter'))
-app.use('/api/order',require('./routes/orderRouter'))
+// Your API routes here (if any)
+app.get('/api', (req, res) => {
+  res.json({ message: 'API Working' });
+});
 
+// Serve user frontend for root path
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'userfrontend', 'index.html'));
+});
 
-
-
-
-app.get("/",(req,res)=>{
-    res.send("API Working")
-})
-
-app.listen(port,()=>{
-    console.log(`Server started on http://localhost:${port}`)
-})
+app.listen(PORT, () => {
+  console.log(`Server started on http://localhost:${PORT}`);
+});
