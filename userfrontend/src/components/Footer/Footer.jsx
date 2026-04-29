@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="footer-content">
         <div className="footer-content-left">
           <img className='footer-logo' src={assets.logo_bottom} alt="" />
-          <p>Food Prep is a full-stack project designed for hands-on teaching, helping students learn full-stack development. It's used by FACEPrep, an ed-tech company focused on equipping students with the skills to achieve their career aspirations.</p>
+          <p>Food Prep</p>
           <div className="footer-social-icons">
             <img src={assets.facebook_icon} alt="" />
             <img src={assets.twitter_icon} alt="" />
@@ -18,10 +18,10 @@ const Footer = () => {
         <div className="footer-content-center">
           <h2>Company</h2>
           <ul>
-            <li><a href="https://faceprep.edmingle.com/"></a>Home</li>
-            <li><a href="https://faceprep.edmingle.com/contact-us"></a>About us</li>
-            <li><a href="https://faceprep.edmingle.com/courses"></a>Courses</li>
-            <li><a href="https://faceprep.edmingle.com/reviews"></a>Reviews</li>
+            <li><a href="https://faceprep.edminge.com/"></a>Home</li>
+            <li><a href="https://faceprep.edminge.com/contact-us"></a>About us</li>
+            <li><a href="https://faceprep.edminge.com/courses"></a>Courses</li>
+            <li><a href="https://faceprep.edminle.com/reviews"></a>Reviews</li>
           </ul>
         </div>
         <div className="footer-content-right">
