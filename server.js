@@ -11,9 +11,9 @@ const PORT = process.env.PORT || 10000;
 const userDistPath = path.join(__dirname, 'userfrontend', 'dist');
 const adminDistPath = path.join(__dirname, 'adminfrontend', 'dist');
 
-console.log('📍 Server running from:', __dirname);
-console.log('📍 User frontend build path:', userDistPath);
-console.log('📍 Admin frontend build path:', adminDistPath);
+console.log('Server running from:', __dirname);
+console.log('User frontend build path:', userDistPath);
+console.log('Admin frontend build path:', adminDistPath);
 
 // Middleware
 app.use(cors());
@@ -23,8 +23,8 @@ app.use(express.json());
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://pranavi23bce8014:103komqBu6c72ln0@cluster0.f2x9ysd.mongodb.net/foodprep1';
 
 mongoose.connect(MONGODB_URI)
-  .then(() => console.log('✅ MongoDB connected successfully'))
-  .catch(err => console.error('❌ MongoDB connection error:', err));
+  .then(() => console.log('MongoDB connected successfully'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
 // API Routes
 app.get('/api/health', (req, res) => {
@@ -48,10 +48,8 @@ app.get('/test', (req, res) => {
         .error { color: red; }
       </style>
     </head>
-    <body>
-      <h1>✅ Server is Running!</h1>
-      <p>If you see this, the server is working correctly.</p>
-      <p>Check the browser console for React app errors (F12).</p>
+    <body
+      <p>the server is working correctly.</p>
       <div>
         <h3>Debug Info:</h3>
         <p>User Dist Path: ${userDistPath}</p>
